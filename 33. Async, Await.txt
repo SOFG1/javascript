@@ -1,0 +1,78 @@
+
+
+
+	Async и Await - операторы, которые помагают удобно работать с асинхронным кодом.
+
+
+	Оператор async пишем перед асинхронной функцией. Пример: async function fetchData() { fetch(url)}
+
+	Внутри функции пишем await перед промисом. Пример: await delay(3000)
+
+	Далее код, который мы пропишем после "await delay(3000)" будет, равен тому что мы прописали в then()
+
+	Если последующий код, также асинхронный мы можем еще раз прописать await. Чтоб следующий код также выполнялся после завершения этого.
+
+	Async Await - являются аналогом Promise. Тут также возможна передача данных как в resolve
+
+
+
+	Пример: 
+
+		const delay = ms => new Promise(r => setTimeout(()=> r(), ms))
+
+		async function sendDelayedRequest(ms) {
+							 await delay(ms);						// Мы прописали оператор await, последующий код будет выполнен после завершения этого асинхронного кода.	
+							 const data = await fetch(url).then(res => res.json());		// Повторение await, в переменную data, будут добавлены данные с сервера.
+							 console.log(data);						// Логирование data после завершения асинхронного запроса.
+							}
+
+
+
+
+
+	
+
+
+	Обработка ошибок:
+
+		const delay = ms => new Promise(r => setTimeout(()=> r(), ms))
+
+		async function sendDelayedRequest(ms) {
+							 try {									// Добавляем код с await в блок try
+								await delay(ms);						
+							 	const data = await fetch(url).then(res => res.json());		
+							 	console.log(data);
+							 } catch(e) {								// При возникновении ошибок в блоке try, будет выполнен блок catch
+								console.log(`erorr ${e} occured`)						
+							 } finally {								// Блок finally выполнится в любом случае вне зависимости от ошибок.
+								console.log('operations finished')
+							 }
+
+
+
+	then с Async Await
+
+	
+	sendDelayedRequest(4000).then(()=> // Этот код выполнится после завершения последней await функции)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

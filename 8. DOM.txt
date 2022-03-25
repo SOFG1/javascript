@@ -1,0 +1,196 @@
+
+							Document Object Model (DOM)
+
+
+
+						Способы добавления(связывания) JAVASCRIPT кода в html.
+
+
+
+
+	Существует 3 способа добавления JS в HTML (как CSS)
+
+
+
+
+        1) Первый способ (INLINE JS) добавления (НЕРЕКОМЕНДУЕМЫЙ!) JS в HTML тег - добавляем атрибут onload = "//Javascript code". 
+
+		Пример: <body onload = " alert('Hello !') ">     </body> - При загрузке тега body будет выполняться код в кавычках т.е. - alert(" Hello ! ");
+
+		p.s. - В js в html Используем одинарные кавычки когда обозначаем строку(string), чтобы браузер смог различить границы аттрибута(js кода) и строки(string)
+
+
+
+
+	2) Второй способ (INTERNAL JS) добавления - пишем код в теге <script type="text/javascript"> //JS code </script>  К тегу скрипт добавляем атрибут type="text/javascript" с данными значениями.
+		
+		Пример:  <script type="text/javascript">
+			   alert("Hello !");
+			 </script>
+
+
+
+	3) Третий способ (EXTERNAL JS) добавления - добавляем тег с источником на сторонний JS файл. 
+
+		Пример: <script src="./js/main.js" charset="utf-8></script>
+
+		p.s. - Скрипту будет доступен только html код который загрузился до него (который находится вверху в html документе). Т. е. мы можем ссылаться только на те элементы которые вверху него.
+			Для этого лучше добавлять скрипт в конце html документа.
+
+
+
+
+
+					QuerySelector
+
+
+
+
+
+23) document.querySelector("selector"); - В кавычках мы должны указать селектор элемента из html файла..
+
+	Пример: document.querySelector("h1") - это будет означать первый элемент с тегом h1 который встретится в html документе.
+
+		  document.querySelector(".title") - это будет означать первый элемент с классом .title который встретиться в html документе.
+
+		  document.querySelector("#facebook-icon") - это будет означать первый элемент (по сути единственный в документе) с идентификатором #facebook-icon
+
+
+24) document.querySelectorAll("selectors"); - В кавычках мы должны указать элементы из html файла на которых хотим ссылаться.
+
+	Пример: document.querySelectorAll("h1") - этим способом мы ссылаемся на все элементы с тегом h1 из html документа.
+	
+	p.s. тут мы можем использовать любой Селектор          Примеры :  header .container     / ul.list   /   footer #social   /   h1 , .item   /   
+
+
+
+25) .innerHTML = "" - с помощью .innerHTML мы можем менять значение внутри html элемента(-ов) на который ссылаемся, в кавычках указываем данные которые хотим ввести.
+
+	Пример: document.querySelector(".intro-text").innerHTML - "Welcome to our website !"
+
+	ps - С помощью данного способа мы меняем весь html код в теге (Не только контент)          Пример: heading.innerHTML = "<span>Eduard</span><b>Kosyan</b>"
+
+
+
+
+26) first / secondElement Child - Документ html состоит из сетки (дерева) родителей и детей. 
+
+	Примеры: Если мы вводим "document" - мы ссылаемся на html документ
+
+		Если мы вводим "document.firstElementChild" - Мы ссылаемся на первый элемент в html документе т.е. на html тег.
+
+		Если мы вводим "document.firstElementChild.lastElementChild" - Мы ссылаемся сначала на первый элемент документа, а потом на его последний элемент. т.е. сначала на тег html , а потом на тег body (тег head первый а body посл.)
+
+
+27) Мы можем также получить элементы не из html а с других элементов.
+
+	Примеры: header.firstElementChild
+
+		 intro.lastElementChild
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+27) element.style - мы можем добавлять стили (inline CSS) через JS код.
+
+	Пример: var heading = document.firstElementChild.lastElementChild.firstElementChild;
+
+		heading.style.margin = "20px auto";
+
+		heading.textAling = "center"
+
+
+	*** Элемент.style.свойство(background) - "значение(red)";
+
+
+
+
+
+
+
+
+
+
+
+
+											Способы получения html елементов через javascript
+
+
+
+1) Получить элементы по названиюю тега - document.getElementsByTagName("h1"); - Этим способом мы получаем массив с соответствующими элементами.  P.S. - Мы получаем массив даже если мы ссылаемся на 1 елемент.
+
+	т.е. document.getElementsByTagName("button").style.color = "red" - НЕ БУДЕТ РАБОТАТЬ. Мы должны указать в квадратных скобках первый элемент массива, потому что мы ссылаемся на массив.
+ 	
+
+    Пример var secondLi = document.getElementsByTagName("li")[1];
+
+
+
+2) Получить элементы по названию класса - document.getElementsByClassName("btn") - Этим способом мы получим массив с элементами, которые содержат класс btn. P.S. - Мы получаем массив даже если мы ссылаемся на 1 елемент.
+
+	т.е. document.getElementsByClassName("button").style.color = "red" - НЕ БУДЕТ РАБОТАТЬ. Мы должны указать в квадратных скобках первый элемент массива, потому что мы ссылаемся на массив.
+
+
+
+3) Получить элемент по названию идентификатора - document.getElementById("footer") - Этим способом мы получаем не массив, а сразу элемент на который ссылаемся.
+
+
+
+
+4) Получить элемент по селектору - document.querySelector("ul") - Этим способом мы ссылаемся на селектор, а не только на конкретный тег. И в итоге получаем не массив. А один (первый) соответствующий элемент из html документа.
+
+	Так как это селектор (не название тега), мы можем использовать комбинации.
+
+	Примеры: document.querySelcetor("header .container");	 document.querySelector("ul li");	document.querySelector(".social__item #first");
+
+
+
+
+5) Получить массив со всеми элементами по селектору - document.querySelectorAll("ul li") - Этим способом мы ссылаемся на все элементы которые, соответсвтуют данному селектору. Этим способом мы также получаем МАССИВ т.е. чтобы использовать один
+
+из них мы должны ссылаться на конкретный элемент через квадратные скобки.
+	
+	Пример: document.querySelectorAll("li")[0].style.color = "red";
+
+
+
+
+
+
+
+
+
+
+
+
+6) Получить элемент, по которому выполнено событие:			document.addEventListener('click', fucntion (e) {  let target = e.target           });
+
+
+
+
+
+
+
+
+
+7) Получить обьект data аттрибутов и значений элемента.			element.dataset;
+
+
+
+
+
+
+
+
+
+

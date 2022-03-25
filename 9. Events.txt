@@ -1,0 +1,118 @@
+				События
+
+
+ 1)    Способ добавления датчика событий на html элемент - .addEventListener("событие", функция которая выполняется). 
+
+	Пример: document.querySelector(".button").addEventListener("click", function (e) {
+											   // Код который выполняется.
+											 });
+
+
+	Или мы можем прописать сразу функцию без скобок: document.querySelector(".button").addEventListener("click", playSound )
+
+	P.S. - функция прописывается без скобок. Так как при деклорировании не должна выполняться.
+
+
+
+
+
+
+
+2)			this
+
+
+	Пример:
+
+	var btns = document.querySelectorAll('.button');
+
+	for(var i = 0; i < btns.length; i++) {
+
+		btns[i].addEventListener('click', function () { 
+
+			 play(this.getAttribute('data-sound'));
+			
+			});
+
+	
+	P.S. - в данном коде this будет указывать элемент к которому относится событие.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3)) Мы можем подключить наш main.js в заголовке html (<head>), но мы должны прописать его так, чтоб он грузился только после загрузки html зтраницы. 
+
+	Для этого мы пишем. document.addEventListener("ready", function () { // Код, который будет выполняться      });
+
+	Для jQuery. $(document).ready(function () { // Код, который будет выполняться });	 ИЛИ	$(function () {  // Код, который будет выполняться  });  P.S. - Мы должны добавить сначала JS jQuery потом main.js
+
+
+
+
+
+
+
+
+
+
+
+4)  event.preventDefault() - Прерывание действия по умолчанию.  Применяется к событию(клику).
+
+	Пример :  link.addEventListener("click", function(event) {  event.preventDefault   });  // Например предотвращает переход по ссылке(по умолчанию)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5) Координаты события(клика)                     element.on("click", function(event) { // code})       event.screenX Кординаты X в экране монитора.
+
+													event.clientX Кординаты X в window.
+
+													event.pageX   Кординаты X в html документе.
+
+
+
+
+
+
+
+
+
+
+
+
+6) event.stopPropogation(); - Предотвращает распространение события на родителей элемента. Если мы кликаем на элемент в DOM то мы кликаем по родителям тоже. Этим методом мы предотвращаем клик на родителей.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

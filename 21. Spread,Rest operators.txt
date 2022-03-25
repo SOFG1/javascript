@@ -1,0 +1,91 @@
+
+
+
+			Spread / Rest
+
+	Spread - Расширение, распространение. (...)
+
+	Rest - Остаток.
+
+	
+
+
+
+				Spread
+
+	Spread - Представляет все элементы обьекта, массива или строки в развернутом виде.
+
+
+
+	На примере массива:
+	
+	const normalWork = ["engineer", "manager", "turner"];
+
+	const advanced = ["programmer", "doctor"];
+
+	const all = [...normalWork, ...advanced];		//  ==    ["engineer", "manager", "turner", "programmer", "doctor"];
+
+
+
+	На примере строки:
+
+	const word = "ed";
+	const surname = "kosyan";
+	const summ = [...word, ...surname];			// == ['e', 'd', 'k', 'o', 's','y', 'a', 'n'];
+
+	const name = "ED";
+	const surname = "Kosyan";
+	const data = {...name,  ...surname}			// == { '0': 'K', '1': 'o', '2': 's', '3': 'y', '4': 'a', '5': 'n' }
+
+
+
+
+	На примере обьекта:
+
+	const i = {
+  		'myName' : 'ED',
+  		'mySurname' : 'Kosyan'
+	}
+
+	const mine = {
+  		'name' : 'Q',
+  		'surname' : 'B'
+	}
+
+
+	const family = {...i, ...mine};			// ==   { myName: 'ED', mySurname: 'Kosyan', name: 'Q', surname: 'B' }
+
+
+
+
+
+
+
+
+
+
+
+			Rest
+
+	Rest - позволяет функции принимать неопределенное кол-во параметров(множество) как массив. И параметры будут массивом. Но параметры функции (без rest) НЕ являются массивом. 
+
+	Например: Мы декларируем функцию и не знаем сколько будет применено параметров. Поэтому применяем rest.
+
+	function paramsSum(...pararms) {
+						let cont = 0;
+    						params.forEach(item => cont+=item);
+    						return cont;
+					}
+
+
+
+	PS - т.к. ключ. слово arguments не является массивом мы не можем применить к нему методы массивов. А с применение rest можем...
+
+
+
+
+
+
+
+
+

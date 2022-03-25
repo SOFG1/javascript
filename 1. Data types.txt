@@ -1,0 +1,115 @@
+1) strings =  "Eduard Kosyan";
+
+
+2) numbers = 213;
+
+
+3) booleans = true / false;
+
+
+4) arrays = ['firstItem', 2000, true, 'anotherItem', ['arrayItemInArray']];
+
+5) Objects = { firstItem: 'firstItem',
+
+	       secondItem: 2000,
+
+	       thirdItem: ['anArrrayInObject', 213],
+	  
+	       itemName: 'soemthing',
+		
+	       }
+
+
+6) function (e) { // Do something }
+
+
+
+
+7) Обьекты, Массивы и Функции могут вкладываться в друг друга бесконечное кол-во раз. Также могут содержать функции.
+
+
+
+
+8) Функция Конструктор Обьектов -                          Декларирование:     function CreateEmployee(name,age,profession, languages) {
+
+												this.name = name;   
+
+												this.age = age;  
+
+												this.profession = "Programmer"; 
+
+												this.languages = languages  
+
+												};
+
+
+									Выполнение:        var Employee1 = new CreateEmployee("Edward", 21, "programmer", ["Armenian", "Russian", "Engilsh"]);
+
+
+
+
+
+
+
+
+
+9) Обьект window - window Обьект который содержит много свойств об окне браузера. Мы можем прописать к нему свойства после точки "." и получить разные значение (скролл топ ...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+11) Перевод строки в строке JS.     -  \n     e.g.          alert("first string\nsecond string");
+
+
+
+
+
+
+
+12) Если в обычном коде(не в условии) есть код с логическими операторами, код выдает один из оперантов.
+
+		Пример: "EDK" && "EK" - выдает "EK"
+
+			"EDK" || "EK" - выдает "EDK"
+
+			"EDK" && "ED" || "EK" - выдает "ED"
+
+
+
+
+
+
+
+
+
+
+
+13) ~~12.34 == Math.floor(12.34). Округляет число. Можно ставить перед числовыми переменными тоже.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

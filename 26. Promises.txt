@@ -1,0 +1,342 @@
+
+
+
+
+			Promises
+
+	Промисы это - как бы инструмент, который позволяет выполнять ассинхронные операции(напрмиер setTimeOut) последовательно(дожидаясь конца предыдущего). Без вложения их друг в друга...
+
+	Например если у нас есть ассинхронная операция -  после него код, который должен выполнится только после завершения первого. Если не использовать промисы мы будем вынуждены вложить последующий код в асинхронный код, чтобы
+
+	он выполнялся только после завершения ассинхронного кода. И если у нас будут много последовательных ассинхронных операций, и если мы будем вкладывать их друг в друга у нас будет сложный в поддержке код.
+	
+	С помощью промисов мы можем избежать этого.
+
+
+
+				Пример использования промисов:
+
+	
+	// Асинхронный код, записанный в промис
+
+	const asyncOperation = new Promise((resolve, reject)=> {
+		setTimeout(() => {
+			console.log("Completed first operation, the code has been stopped for 2 seconds");
+			resolve();														// !!!! resolve() мы вызываем именно тут !
+		}, 2000);
+	});
+
+
+
+	// Продолжение промиса. (этот код будет выполнен именно в момент завершения первого, приостанавливая интерпретатор)
+
+	asyncOperation.then(()=> { console.log("Async Operation completed, the code has been stopped, and you can see this message now")        });
+
+
+
+	PS - функция resolve() вызывается именно в там где мы бы поставили код без использования промисов(в нашем случае внутри setTimeout). Иначе промис не будет работать.
+
+
+
+
+
+
+
+
+
+
+
+
+					Передача содержимого промиса.
+
+
+	В случае с обычным кодом продолжение асинхронного кода будет вложена внего, значит в продолжении будут доступны данные асинхронного кода, т.к. продолжение будет находится в его области видимости...
+
+	В случае с использованием промисов асинхронная операция и его продолжение будут находится в разных блоках, значит мы несможем использовать данные асинхронного кода в продолжении...
+
+
+	Для избежания этого мы можем передать необходимые нам данные как аргумент в resolve(argument), который будет доступен в продолжении (then())
+
+
+		Пример:
+
+		const asyncOperation = new Promise((resolve, reject)=> {
+
+		setTimeout(()=>{
+
+				let message = "Completed first operation, the code has been stopped for 2 seconds"
+
+				console.log(message);
+
+				resolve(message);
+														
+			}, 2000);
+		});
+
+
+		asyncOperation.then((message)=> { 
+
+				console.log(message)        
+
+				});
+
+
+
+
+	PS - В этом случае мы передали переменную 'message' в аргумент resolve(message), а потом использовали его в функции в then().  
+
+	PS - Этим способом мы можем передавать один элемент. Если нам нужно много можем вложить в обьект или массив.
+
+
+
+
+
+
+
+
+
+
+			Выполнение нескольких последовательных операций
+
+	Чтобы вторую асинхронную операцию(продолжение первой) сделать тоже промисам надо записать then которая возвращает promise
+
+	Есть два способоа: можем возвращать новый промис в переменную, либо сделать цепочку из then()
+
+	1) Пример:		const secondOperation = firstOperation.then(
+
+									return new Promise((resolve, reject) => {
+															setTimeout(function(){
+																		console.log("second operation completed");
+																		resolve();
+																	},2000)
+																})
+																);
+
+
+	2) Пример: 		firstOperation.then( ()= > {
+
+							return new Promise((resolve, reject) => {
+							setTimeout(function(){
+								console.log("second operation completed");
+								resolve();
+								},2000)
+							})
+						}).then( ()=>{
+								// Continuation
+						});
+
+
+
+
+
+
+		Таким образом мы можем получить цепочку из последовательных асинхронных операций:
+
+const first = new Promise((resolve, reject)=> {
+    setTimeout(()=> {
+        console.log("First action");
+        resolve();
+    }, 2000)
+});
+
+first.then(()=> {
+        return new Promise((resolve,reject)=> {
+            setTimeout(()=> {
+                console.log("Second action");
+                resolve();
+            },2000)
+        });
+}).then(()=> {
+    return new Promise((resolve, reject)=> {
+        setTimeout(()=> {
+            console.log("Third action");
+            resolve();
+        }, 2000)
+    });
+}).then(()=> {
+    setTimeout(()=> {
+        console.log("Fouth action");
+    }, 2000)
+});
+
+
+
+	PS - Данный код содержит один уровень вложенности и легко поддерживается.
+
+	PS - Также мы можем передавать данные через цепочку then() используя ruturn
+
+
+
+
+
+				Метод catch() и finally()
+
+	Метод .catch() принимает функцию и выводит ошибки.
+
+		.catch(err => console.log(err));
+
+
+	Метода .finally() принимает функцию, котороая выполняется в конце, даже если в цепочке произойдет ошибка и цепочка не завершится - функция в finally() все равно выполнится.
+
+
+
+
+
+
+
+
+
+
+
+			Метод Promise.all()
+
+	У глобального класса Promise есть метод all(), который принимает массив из промисов.
+
+	К методу all() можно применить метод ,then() которая принимает функцию, которая выполнится после завершения всех промиссов в масисве.
+
+		Пример:
+
+	Promise.all([firstAction, secondAction, thirdAction]).then(()=> console.log("This message will be shown, when all action in the array have completed") );
+
+
+
+
+
+
+			Метод Promise.race()
+
+	Метод Promise.race() - похож на .all() принимает промисы и к нему можно применить метод .then() И функция внутри .then() выполнится - как только сработает один из промисов.
+
+		Пример:
+
+
+	Promise.all([firstAction, secondAction, thirdAction]).then(()=> console.log("This message will be shown, as soon as one of the promises have completed") );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
